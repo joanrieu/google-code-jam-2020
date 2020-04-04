@@ -1,0 +1,45 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "g++ build active file",
+      "command": "/usr/bin/g++",
+      "args": [
+        "-g",
+        "${file}",
+        "-o",
+        "${fileDirname}/${fileBasenameNoExtension}",
+        "-std=c++14",
+        "-pthread",
+        "-O3",
+        "-Wall",
+        "-Wextra",
+        "-Wpedantic"
+      ],
+      "options": {
+        "cwd": "/usr/bin"
+      },
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
+      "label": "Compare output to sample",
+      "command": "./${fileBasenameNoExtension} <sample-in.txt | diff --side-by-side /dev/stdin sample-out.txt",
+      "options": {
+        "cwd": "${fileDirname}"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "dependsOn": ["g++ build active file"]
+    }
+  ]
+}
