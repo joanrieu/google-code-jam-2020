@@ -35,11 +35,20 @@
       "options": {
         "cwd": "${fileDirname}"
       },
+      "group": "test",
+      "dependsOn": ["g++ build active file"]
+    },
+    {
+      "type": "shell",
+      "label": "Run and compare Node output to sample",
+      "command": "node ./${fileBasename} <sample-in.txt | diff --side-by-side /dev/stdin sample-out.txt",
+      "options": {
+        "cwd": "${fileDirname}"
+      },
       "group": {
         "kind": "test",
         "isDefault": true
-      },
-      "dependsOn": ["g++ build active file"]
+      }
     }
   ]
 }
